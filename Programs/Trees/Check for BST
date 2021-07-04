@@ -1,0 +1,37 @@
+public class Solution
+{
+    //Function to check whether a Binary Tree is BST or not.
+    public static class BSTPair
+    {
+        boolean is;
+        int min;
+        int max;
+    }
+    public static BSTPair is(Node node)
+    {
+        if(node==null)
+        {
+            BSTPair bp = new BSTPair();
+            bp.min=Integer.MAX_VALUE;
+            bp.max=Integer.MIN_VALUE;
+            bp.is=true;
+            return bp;
+        }
+        
+        BSTPair lp = is(node.left);
+        BSTPair rp = is(node.right);
+        
+        BSTPair mp = new BSTPair();
+        mp.is=(lp.is && rp.is) && (node.data>lp.max && node.data<rp.min);
+        mp.min=Math.min(node.data,Math.min(lp.min,rp.min));
+        mp.max=Math.max(node.data,Math.max(lp.max,rp.max));
+        return mp;
+    }
+    boolean isBST(Node root)
+    {
+        // code here.
+        if(root==null) return false;
+        BSTPair bp = is(root);
+        return bp.is;
+    }
+}
